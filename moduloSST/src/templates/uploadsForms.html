@@ -1,0 +1,16 @@
+<section>
+    <h2 class="text-center">
+        <!-- <a href="/home" class="left" title="Volver"><i class="bi bi-arrow-left-circle"></i></a> -->
+        Crear documentos de trabajo
+        <hr>
+    </h2>
+
+    <form action="/upload" method="POST" enctype="multipart/form-data">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <div class="row">
+            <div class="col">
+                <input type="file" name="file" class="form-control">
+                <input class="button-primary mt-3 btn btn-info btn-block bold" type="submit" value="Cargar">
+            </div>
+        </div>
+    </form>

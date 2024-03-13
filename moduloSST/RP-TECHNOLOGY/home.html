@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet"  href="{{ url_for('static', filename='stylehome.css')}}">>
+    <title>principal</title>
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <ul class="menu">
+                <li><a href="#">Inicio</a></li>
+                <li class="dropdown">
+                    <a href="#">Administración del Sistema</a>
+                    <ul class="submenu">
+                        <li{% if typeUserID != 1 %} class="disabled"{% endif %}><a href="#">Usuarios</a></li>
+                        <li{% if typeUserID != 1 %} class="disabled"{% endif %}><a href="#">Configuración</a></li>
+                    </ul>
+                </li>
+                <li{% if typeUserID != 2 %} class="disabled"{% endif %}><a href="#CrearFlujoDeTrabajo">Crear Flujo de Trabajo</a></li>
+                <li{% if typeUserID != 2 %} class="disabled"{% endif %}><a href="#BandejaDeTareas">Bandeja de Tareas</a></li>
+            </ul>
+            
+                        
+        </div>
+        <div class="content">
+           
+            <div class="login-form">
+                
+                <form>
+                    <div class="header">
+                        <img src="pruebasfoto.png" alt="Foto de perfil">
+                        <!-- Nombre de usuario o información de perfil aquí -->
+                    </div>
+                    
+                    <!-- Campos de inicio de sesión aquí -->
+                    <h2>NOMBRE DEL PERFIL</h2>
+                    <button type="submit">Iniciar Sesión</button>
+                    <button id="toggle-menu-button">Abrir Menú</button>
+                                        <div class="search-container">
+                        <input type="text" id="search" name="search" placeholder="Buscar...">
+                        <button type="submit" id="search-button">Buscar</button>
+                    </div>
+                </form>
+                <iframe src="https://docs.google.com/forms/d/e/1FAIpQLScqgIPJOm_a_4pP3f_9-jwzqLDf1lUeAnfWpOkwiTiHMDCAMw/viewform?embedded=true" width="640" height="3062" frameborder="0" marginheight="0" marginwidth="0">Cargando…</iframe>
+            </div>
+
+            <div id="bandejaTareas" style="display: none;">
+                <div class="login-form">
+                <!-- Contenido de la división pruebas -->
+                                    <h2>Bandeja de Tareas</h2>
+                    <ul class="tasks-list">
+                        <ul class="tasks-list">
+                            <li>
+                                <button class="task-button task-pendiente" onclick="mostrarTarea('pendiente')">
+                                    Tarea Pendiente
+                                </button>
+                                <div id="tarea-pendiente" class="task-content" style="display: none;">
+                                    <p><strong>Tarea Pendiente:</strong> Realizar informe mensual</p>
+                                </div>
+                            </li>
+                            <li>
+                                <button class="task-button task-creada" onclick="mostrarTarea('creada')">
+                                    Tarea Creada
+                                </button>
+                                <div id="tarea-creada" class="task-content" style="display: none;">
+                                    <p><strong>Tarea Creada:</strong> Revisar propuestas de proyecto</p>
+                                </div>
+                            </li>
+                            <li>
+                                <button class="task-button task-radicada" onclick="mostrarTarea('radicada')">
+                                    Tarea Radicada
+                                </button>
+                                <div id="tarea-radicada" class="task-content" style="display: none;">
+                                    <p><strong>Tarea Radicada:</strong> Aprobar solicitudes de vacaciones</p>
+                                </div>
+                            </li>
+                            <!-- Puedes agregar más elementos <li> para representar más tareas -->
+                        </ul>
+                
+            </div>
+        </div>
+
+        <div id="crearFlujoDeTrabajo" style="display: none;">
+            <div class="login-form">
+            <H2>HOLA COMO ESTAN</H2>
+            <!-- Puedes agregar aquí tus elementos HTML y contenido -->
+        </div>
+    </div>
+        </div>
+
+    </div>
+    <script>
+        var toggleButton = document.getElementById('toggle-menu-button');
+        var sidebar = document.querySelector('.sidebar');
+
+        toggleButton.addEventListener('click', function() {
+            sidebar.classList.toggle('open');
+        });
+    </script>
+<script>
+    // Obtén una referencia al enlace "Bandeja de Tareas"
+    var bandejaDeTareasLink = document.querySelector('.menu a[href="#BandejaDeTareas"]');
+
+    // Obtén una referencia a la división "pruebas"
+   
+    var bandejaDeTareassection = document.getElementById('bandejaTareas');
+
+    // Agrega un evento de clic al enlace "Bandeja de Tareas"
+    bandejaDeTareasLink.addEventListener('click', function(event) {
+        event.preventDefault(); // Evita la navegación a la página de destino
+
+        // Muestra la división "pruebas"
+        pruebasDiv.style.display = 'block';
+    });
+</script>
+<script>
+    // Obtén una referencia al enlace "Crear Flujo de Trabajo"
+var crearFlujoDeTrabajoLink = document.querySelector('.menu a[href="#CrearFlujoDeTrabajo"]');
+
+// Obtén una referencia a la sección "Crear Flujo de Trabajo"
+var crearFlujoDeTrabajoSection = document.getElementById('crearFlujoDeTrabajo');
+</script>
+<script>
+
+ function mostrarTarea(tipo) {
+    var contenidoTarea = document.getElementById('tarea-' + tipo);
+
+
+
+    // Alternar la visibilidad del contenido de la tarea
+    if (contenidoTarea.style.display === 'none' || contenidoTarea.style.display === '') {
+        contenidoTarea.style.display = 'block';
+    } else {
+        contenidoTarea.style.display = 'none';
+    }
+}
+</script>
+<script>
+    bandejaDeTareasLink.addEventListener('click', function(event) {
+        event.preventDefault(); // Evita la navegación a la página de destino
+
+
+    // Alternar la visibilidad de la sección "bandeja de tareas"
+    if (bandejaDeTareassection.style.display === 'none' || bandejaDeTareassection.style.display === '') {
+        bandejaDeTareassection.style.display = 'block';
+    } else {
+        bandejaDeTareassection.style.display = 'none';
+    }
+});
+</script>
+<script>
+    crearFlujoDeTrabajoLink.addEventListener('click', function(event) {
+    event.preventDefault(); // Evita la navegación a la página de destino
+
+    // Alternar la visibilidad de la sección "Crear Flujo de Trabajo"
+    if (crearFlujoDeTrabajoSection.style.display === 'none' || crearFlujoDeTrabajoSection.style.display === '') {
+        crearFlujoDeTrabajoSection.style.display = 'block';
+    } else {
+        crearFlujoDeTrabajoSection.style.display = 'none';
+    }
+});
+</script>
+</body>
+</html>

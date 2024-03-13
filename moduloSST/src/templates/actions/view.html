@@ -1,0 +1,52 @@
+{% extends 'layout.html' %}
+{% block title %}Registrar Usuario{% endblock %}
+
+{% block body %}
+
+
+<section>
+  <h2>
+    <a href="/home" class="left" title="Volver"><i class="bi bi-arrow-left-circle"></i></a>
+    Detalles del Usuario
+    <hr>
+  </h2>
+
+  {% if (infoUsuario) %}
+
+  <div class="card" style="width: 25rem;">
+    {% if(infoUsuario.photo !="") %}
+    <img src="{{ url_for('static', filename=infoUsuario.photo)}}" class="card-img-top" alt="Foto de usuario">
+    {% else %}
+    <img src="{{ url_for('static', filename=infoUsuario.photo)}}" class="card-img-top sin_foto" alt="Sin foto">
+    {% endif %}
+
+    <div class="card-body">
+      {% if infoUsuario.typeUserId == 1 %}
+        <h5 class="card-title"> <strong>Administrador</strong></h5>
+      {% elif infoUsuario.typeUserId == 2 %}
+        <h5 class="card-title"> <strong>Supervisor</strong></h5>
+      {% elif infoUsuario.typeUserId == 3 %}
+        <h5 class="card-title"> <strong>Tecnico</strong></h5>
+      {% endif %}
+    </div>
+    
+
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item">Nombre: <strong>{{ infoUsuario.name }}</strong></li>
+      <li class="list-group-item">Apellido: <strong>{{ infoUsuario.lastname }}</strong></li>
+      <li class="list-group-item">Nombre de usuario: <strong>{{ infoUsuario.username }}</strong></li>
+      <li class="list-group-item">Correo: <strong>{{ infoUsuario.mail }}</strong></li>
+    </ul>
+  </div>
+
+  {% else %}
+  <div class="col-12">
+    <h2 class="text-center">
+      No existe el usuario
+    </h2>
+  </div>
+  {% endif %}
+
+</section>
+
+{% endblock %}

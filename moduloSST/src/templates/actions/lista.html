@@ -1,0 +1,73 @@
+
+<!-- {{ data }} -->
+{% if (data) %}
+<div class="table-responsive">
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col" class="text-center">#</th>
+                <th scope="col" class="text-center">Nombre</th>
+                <th scope="col" class="text-center">Apellido</th>
+                <th scope="col" class="text-center">Tipo de usuario</th>
+                <th scope="col" class="text-center">Username</th>
+                <th scope="col" class="text-center">Correo</th>
+                <th scope="col" class="text-center">Foto</th>
+                <th scope="col" class="text-center">Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in data %} 
+            <!-- Recorre cada elemento de la lista y data y la asigna a una variable user -->
+            <tr id="Registro{{ user.idUser }}">
+                <!-- loop.index crea una celda de encabezado en la fila de la tabla y muestra el valor del índice actual del bucle, que es accesible a través de loop.index.  -->
+                <th scope="row">{{ loop.index }}</th>
+                <td class="text-center">{{ user.name }}</td>
+                <td class="text-center">{{ user.lastname }}</td>
+                <td class="text-center">
+                    {% if user.typeUserId == 1 %} Administrador {%endif%}
+                    {% if user.typeUserId == 2 %} Supervisor {%endif%}
+                    {% if user.typeUserId == 3 %} Tecnico {%endif%}
+                </td>
+                <td class="text-center">{{ user.username }}</td>
+                <td class="text-center">{{ user.mail }}</td>
+                <td class="text-center">
+                    {% if(user.photo !="") %}
+                    <img src="{{ url_for('static', filename=user.photo)}}" class="sin_foto_mini" alt="Foto de usuario">
+                    {% else %}
+                    <img src="{{ url_for('static', filename=user.photo)}}" class="sin_foto_mini" alt="Sin Foto de usuario">
+                    {% endif %}
+                </td>
+                <td width="300">
+                    <span style="display: flex; justify-content:space-between;">
+                        <a href="{{ url_for('viewDetalleUser', idUser = user.idUser ) }}" type="button"
+                            class="btn btn-warning btn-sm" tooltip="Ver Registro">
+                            <i class="bi bi-eye"></i>
+                            Ver
+                        </a>
+                        <a href="{{ url_for('formViewUpdate', idUser = user.idUser) }}" class="btn btn-info btn-sm"
+                            tooltip="Actualizar Registro">
+                            <i class="bi bi-arrow-clockwise"></i>
+                            Actualizar
+                        </a>
+                        <a href="{{ url_for('formViewDelete', idUser = user.idUser) }}" class="btn btn-danger btn-sm"
+                            tooltip="Eliminar Registro" 
+                            onclick="return confirmarEliminar();">
+                            <i class="bi bi-trash3"></i>
+                            Eliminar
+                        </a>
+                    </span>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% else %}
+<div class="row mb-5">
+    <div class="col-md-12">
+        <h3 class="text-center">No hay usuarios</h3>
+    </div>
+</div>
+{% endif %}
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>

@@ -1,0 +1,75 @@
+{% if (dataWorks) %}
+{% include 'alerta.html' %}
+<div class="table-responsive">
+    <table class="table table-hover my-auto table-responsive">
+        <thead>
+            <tr>
+                <th colspan=8 class='text-center text-lg'>Documentos</th>
+            </tr>
+            <tr>
+                <th scope="col" class="text-center">N° trabajo</th>
+                <th scope="col" class="text-center">Tipo de trabajo</th>
+                <th scope="col" class="text-center">Fecha</th>
+                <th scope="col" class="text-center">Ubicación</th>
+                <th scope="col" class="text-center">Tecnico</th>
+                <th scope="col" class="text-center">Nombre documento</th>
+                <th scope="col" class="text-center">Estado</th>
+                <th scope="col" class="text-center">Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for works in dataWorks %}
+            <!-- Recorre cada elemento de la lista y data y la asigna a una variable user -->
+            <tr id="Registro{{ works.idWork }}">
+                <td class="text-center">{{ works.idWork }}</td>
+                <td class="text-center">
+                    {% if works.typeWork == '1' %} Instalación {%endif%}
+                    {% if works.typeWork == '2' %} Mantenimiento {%endif%}
+                    {% if works.typeWork == '3' %} Limpieza {%endif%}
+                </td>
+                <td class="text-center small">{{ works.dateWork }}</td>
+                <td class="text-center">{{ works.ubicacion}}</td>
+                <td class="text-center">
+                    {%for tec in data %}
+                    {% if works.idUserTec == tec.idUser %}
+                    {{tec.name}}
+                    {% endif %}
+                    {% endfor %}
+                </td>
+                <td class="text-center">{{ works.nameDoc}}</td>
+                <!-- Estado dependiendo de variables -->
+                <td class="text-center">
+                    {% if works.enableWork and works.checkSup %} Autorizado {% endif %}
+                    {% if works.enableWork and not works.checkSup %} Pendiente autorización {% endif %}
+                    {% if not works.enableWork and works.checkSup %} Trabajo asignado {% endif %}
+                </td>
+                <!-- PENDIENTE REALIZAR RUTA PARA VER DETALLES DE TRABAJO, DESCARGAR Y AUTORIZAR -->
+                <td width="300">
+                    <span style="display: flex; justify-content: space-between;">
+                        <a href="#" type="button" class="btn btn-warning btn-sm" tooltip="Ver detalles">
+                            <i class="bi bi-eye"></i>
+                            Detalles
+                        </a>
+                        <a href="#" class="btn btn-info btn-sm" tooltip="Descargar documento" style="margin-left: 10px;">
+                            <i class="bi bi-arrow-clockwise"></i>
+                            Descargar
+                        </a>
+                        <a href="#" class="btn btn-info btn-sm" tooltip="Autorizar" style="margin-left: 10px;">
+                            <i class="bi bi-check-circle"></i>
+                            Autorizar
+                        </a>
+                    </span>
+                </td>
+                
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% else %}
+<div class="row mb-5">
+    <div class="col-md-12">
+        <h3 class="text-center">No hay trabajos para el supervisor</h3>
+    </div>
+</div>
+{% endif %}

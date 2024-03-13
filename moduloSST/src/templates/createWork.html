@@ -1,0 +1,117 @@
+{% extends 'layout.html' %}
+{% block title %}Registra trabajo{% endblock %}
+
+{% block body %}
+
+<section>
+    <h2>
+        <!-- <a href="/home" class="left" title="Volver"><i class="bi bi-arrow-left-circle"></i></a> -->
+        Crear orden de trabajo
+        <hr>
+    </h2>
+
+    {% if (dataTecnico or dataSuper) %}
+    <form action="{{ url_for('formCreateWork', idUser = idUser ,typeUserId = typeUserId) }}" method="POST" class="mb-3"
+        autocomplete="off" enctype="multipart/form-data">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+        <div class="row">
+            <div class="col">
+                <label for="typework">Tipo de trabajo</label>
+                <select name="typework" id="work" class="form-control">
+                    <option value="1">Instalación</option>
+                    <option value="2">Mantemiento</option>
+                    <option value="3">Limpieza</option>
+                </select>
+            </div>
+            <div class="col">
+                <label for="ubication">Ubicación</label>
+                <input type="text" name="ubication" value="*****" class="form-control">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <label for="date">Fecha del trabajo</label>
+                <input type="date" name="date" value="" class="form-control">
+            </div>
+            {% if typeUserId == 3 %}
+            <div class="col">
+                {% if (dataSupervisor) %}
+                <label for="supervisor">Supervisor del trabajo</label>
+                <select name="supervisor" id="supervisor" class="form-control">
+                    {% for super in dataSupervisor%}
+                    <option value="{{ super.idUser }}" {% if dataSupervisor.idUser==super.idUser %} selected {% endif
+                        %}>
+                        {{ super.name }}
+                    </option>
+                    {% endfor %}
+                </select>
+                {% endif %}
+            </div>
+            {% elif typeUserId == 2 %}
+            <div class="col">
+                {% if (dataTec) %}
+                <label for="supervisor">Supervisor del trabajo</label>
+                <input type="text" name="supervisor" value=" {{ dataSuper.name}}" class="form-control" disabled>
+                {% endif %}
+            </div>
+            {% endif %}
+        </div>
+
+        <div class="row">
+            {% if typeUserId == 3 %}
+            <div class="col">
+                <label for="nombre">Tecnico</label>
+                <input type="text" name="nombre" value="{{ dataTecnico.name }}" class="form-control" disabled>
+            </div>
+            <div class="col">
+                <label for="apellido">Apellido</label>
+                <input type="text" name="apellido" value="{{ dataTecnico.lastname}}" class="form-control" disabled>
+            </div>
+            {% elif typeUserId == 2 %}
+            <div class="col">
+                {% if (dataTec) %}
+                <label for="tecnico">Tecnico del trabajo</label>
+                <select name="tecnico" id="tecnico" class="form-control">
+                    {% for tecnico in dataTec%}
+                    <option value="{{ tecnico.idUser }}" selected>
+                        {{ tecnico.name }}
+                    </option>
+                    {% endfor %}
+                </select>
+                {% endif %}
+            </div>
+            {% endif %}
+        </div>
+
+        <div class="row">
+            <div class="col">
+                {% if typeUserId == 3 %}
+                <label for="file">Documento diligenciado*</label>
+                {% elif typeUserId == 2 %}
+                <label for="file">Documento de trabajo*</label>
+                {% endif %}
+                <input type="file" name="file" class="form-control" required>
+            </div>
+        </div>
+
+        <hr>
+        {% if typeUserId == 3 %}
+        <input class="button-primary mt-3 btn btn-info btn-block bold" type="submit" value="Crear trabajo">
+        {% elif typeUserId ==2 %}
+        <input class="button-primary mt-3 btn btn-info btn-block bold" type="submit" value="Asignar trabajo">
+        {% endif %}
+    </form>
+
+    {% else %}
+    <div class="col-12">
+        <h2 class="text-center">
+            El usuario no puede realizar esta acción
+        </h2>
+    </div>
+    {% endif %}
+
+</section>
+
+{% endblock %}

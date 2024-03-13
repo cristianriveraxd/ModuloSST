@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Visor de Documentos</title>
+</head>
+<body>
+    <button id="abrirDocumento">Abrir Documento</button>
+    <div id="visorDocumento" style="display: none;">
+        <iframe id="iframeDocumento" src="" width="600" height="400"></iframe>
+    </div>
+    <script>
+        document.getElementById("abrirDocumento").addEventListener("click", function () {
+            var visorDocumento = document.getElementById("visorDocumento");
+            var iframeDocumento = document.getElementById("iframeDocumento");
+            var urlDocumento = "https://docs.google.com/document/d/1oF0L5cEzUmwyh1DiSn8j-3QA9THz03nYWniSKimvxpU/edit?usp=sharing"; // Reemplaza con la URL de tu documento (local o de Google Docs)
+            iframeDocumento.src = "https://docs.google.com/gview?url=" + encodeURIComponent(urlDocumento) + "&embedded=true";
+            visorDocumento.style.display = "block";
+        });
+    </script>
+</body>
+</html>

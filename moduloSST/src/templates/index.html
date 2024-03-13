@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styleindex.css')}}">
+    <title>Iniciar Sesión</title>
+</head>
+
+<body>
+    <div class="login-container">
+        <div class="login-form">
+            <img src="{{ url_for('static', filename='images/LOGO.png')}}" alt="Logo de la empresa">
+            <h2>Iniciar Sesión</h2>
+            <form action="/login" method="POST"> <!--Redirección a ruta index-->
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"> <!-- token de seguridad -->
+                <div class="form-container">
+                    <div class="input-container">
+                        <label for="username">Usuario:</label>
+                        <input type="text" id="username" name="username" placeholder="Nombre de usuario" required>
+                    </div>
+                    <div class="input-container">
+                        <label for="password">Contraseña:</label>
+                        <input type="password" id="password" name="password" placeholder="Contraseña" required>
+                    </div>
+                </div>
+                {% with messages = get_flashed_messages() %}<!--Función para capturar el mensaje que emite flash-->
+                {% if messages %}
+                <br>
+                {% for message in messages %}
+                <div>
+                    <stron> {{ message }}</stron>
+                    <!-- <button type="button">closed</button> -->
+                </div>
+                {% endfor %}
+                {% endif%}
+                {% endwith %}
+                <button type="submit" id="login-button">Iniciar Sesión</button>
+            </form>
+
+        </div>
+    </div>
+</body>
+
+</html>

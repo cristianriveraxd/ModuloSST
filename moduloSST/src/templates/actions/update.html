@@ -1,0 +1,111 @@
+{% extends 'layout.html' %}
+{% block title %}Registrar usuario{% endblock %}
+
+{% block body %}
+
+
+<section>
+    <h2>
+        <a href="/home" class="left" title="Volver"><i class="bi bi-arrow-left-circle"></i></a>
+        Actualizar Información del Usuario
+        <hr>
+    </h2>
+
+    {% if (dataInfo) %}
+    <form action="{{ url_for('formUpdateUser', idUser = dataInfo.idUser ) }}" method="POST" class="mb-3"
+        autocomplete="off" enctype="multipart/form-data">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <input type="text" class="form-control" name="id" value="{{ dataInfo.idUser }}" required hidden>
+
+        <div class="row">
+            <div class="col">
+                <label for="nombre">Nombre</label>
+                <input type="text" name="nombre" value="{{ dataInfo.name }}" class="form-control">
+            </div>
+            <div class="col">
+                <label for="apellido">Apellido</label>
+                <input type="text" name="apellido" value="{{ dataInfo.lastname}}" class="form-control">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <label for="typeUserId">Rol</label>
+                <select name="typeUserId" id="rol" class="form-control">
+                    <option value="1" {% if dataInfo.typeUserId==1 %}selected{% endif %}>Administrador</option>
+                    <option value="2" {% if dataInfo.typeUserId==2 %}selected{% endif %}>Supervisor</option>
+                    <option value="3" {% if dataInfo.typeUserId==3 %}selected{% endif %}>Técnico</option>
+                </select>
+                <br>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col">
+                <label for="email">Correo</label>
+                <input type="email" name="email" value="{{ dataInfo.mail}}" class="form-control">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <label for="username">Nombre de usuario</label>
+                <input type="text" name="username" value="{{ dataInfo.username}}" class="form-control">
+            </div>
+        </div>
+
+
+        <div class="row">
+
+            <div class="col-md-6">
+                <label for="foto-actual">Foto de perfil actual</label>
+                {% if dataInfo.photo != "" %}
+                    <img src="{{ url_for('static', filename=dataInfo.photo) }}" class="foto_update" alt="Foto del usuario {{ dataInfo.username }}">
+                {% else %}
+                    <img src="{{ urlCarro }}sin_foto.jpg" class="foto_update" alt="Foto de usuario {{ datainfo.username }}">
+                {% endif %}
+            </div>
+            
+            <div>
+                <label for="modificar_foto">¿Desea modificar la foto?</label>
+                <select name="modificar_foto" id="modificar_foto" onchange="mostrarOcultarCampo()">
+                    <option value="Y">Sí</option>
+                    <option value="N" selected>No</option>
+                </select>
+            </div>
+            
+            <div id="campo_nueva_foto" style="display: none;">
+                <label for="photo">Subir nueva foto:</label>
+                <input type="file" name="photo" class="form-control-file" accept="image/*">
+            </div>
+
+            <script>
+                function mostrarOcultarCampo() {
+                    var seleccion = document.getElementById("modificar_foto").value;
+                    var campoNuevaFoto = document.getElementById("campo_nueva_foto");
+
+                    if (seleccion === "Y") {
+                        campoNuevaFoto.style.display = "block";
+                    } else {
+                        campoNuevaFoto.style.display = "none";
+                    }
+                }
+            </script>
+
+        </div>
+        <hr>
+        <input class="button-primary mt-3 btn btn-info btn-block bold" type="submit" value="Guardar Actualización">
+    </form>
+
+    {% else %}
+    <div class="col-12">
+        <h2 class="text-center">
+            No existe el Usuario
+        </h2>
+    </div>
+    {% endif %}
+
+</section>
+
+{% endblock %}
