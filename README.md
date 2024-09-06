@@ -96,5 +96,5 @@ A medida que se asignen los trabajos se realiza el control del flujo de los mism
 
 ![WORKS](https://github.com/user-attachments/assets/0cc7aadf-4710-4038-988c-f3a03460a347)
 
-
+A medida que se generan usuarios y documentos. El mismo sistema genera el nombre de forma automatica para no repetir documentos.
 
