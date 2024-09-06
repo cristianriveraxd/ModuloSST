@@ -26,7 +26,7 @@ Esta aplicacipon esta desarrollado con protección contra ataques de inyección 
 ```bash
   pip install -r requirements.txt
 ```
-4) Ejecute el archivo mysql en su servidor mysql para poder crear la base de datos necesaria.
+4) Ejecute el archivo **scriptDB** mysql en su servidor mysql para poder crear la base de datos necesaria.
 5) Una vez creada la base de datos con las tablas correspondientes modifique el archivo **conect.py** con sus credenciales para garantizar la conexión entre el aplicativo y la base de datos.
 5) Modifique el archivo ps.py en la linea 48 la variable name, creando el usuario que desee y asignandole una contraseña en la linea 50, adicional agregue que tipo de usuario es:
 
@@ -91,4 +91,10 @@ En este nivel el supervisor puede crear trabajos y asignarlos a los tecnicos dis
 ![image](https://github.com/user-attachments/assets/02a715b7-3545-498a-8c61-2ce1c2212e9f)
 
 La interfaz entre usuarios es la misma, solo se habilitan funcionalidades a nivel de jerarquia.
+
+A medida que se asignen los trabajos se realiza el control del flujo de los mismos.
+
+![WORKS](https://github.com/user-attachments/assets/0cc7aadf-4710-4038-988c-f3a03460a347)
+
+
 
